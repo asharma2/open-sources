@@ -17,7 +17,7 @@ import org.apache.lucene.store.FSDirectory;
 
 import com.aks.lucene.exception.LuceneException;
 
-public class SearchDocumentImpl implements SearchDocument {
+public class DocumentSearchService implements SearchService {
 
 	@Override
 	public List<Document> search(Path indexDirectory, Analyzer analyzer, String field, String content)

@@ -8,7 +8,7 @@ import org.apache.lucene.document.Document;
 
 import com.aks.lucene.exception.LuceneException;
 
-public interface SearchDocument {
+public interface SearchService {
 
 	List<Document> search(Path indexDirectory, Analyzer analyzer, String field, String content) throws LuceneException;
 }

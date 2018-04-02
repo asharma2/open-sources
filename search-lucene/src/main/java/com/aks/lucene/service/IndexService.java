@@ -7,9 +7,10 @@ import org.apache.lucene.analysis.Analyzer;
 import com.aks.lucene.constants.SearchFiles;
 import com.aks.lucene.exception.LuceneException;
 
-public interface IndexerService {
+public interface IndexService {
 
-	void doIndex(Path indexDirectory, Path sourceDirectory, Analyzer analyzer) throws LuceneException;
+	void doIndex(Path indexDirectory, Path sourceDirectory, Analyzer analyzer, boolean operation)
+			throws LuceneException;
 
 	SearchFiles searchFiles();
 }
