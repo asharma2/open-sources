@@ -24,14 +24,7 @@ public class FileIndexService implements IndexService {
 	@Override
 	public void doIndex(Path indexDirectory, Path sourceDirectory, Analyzer analyzer, boolean operation)
 			throws LuceneException {
-		IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-		if (operation) {
-			iwc.setOpenMode(OpenMode.CREATE);
-		} else {
-			iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
-		}
 		File sd = sourceDirectory.toFile();
-
 		File txtFiles[] = sd.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
@@ -39,6 +32,12 @@ public class FileIndexService implements IndexService {
 			}
 		});
 		for (File file : txtFiles) {
+			IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+			if (operation) {
+				iwc.setOpenMode(OpenMode.CREATE);
+			} else {
+				iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
+			}
 			try (Directory directory = FSDirectory.open(indexDirectory);
 					IndexWriter writer = new IndexWriter(directory, iwc)) {
 				Document document = new Document();
