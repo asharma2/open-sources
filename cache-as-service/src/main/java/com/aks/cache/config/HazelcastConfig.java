@@ -9,8 +9,10 @@ import com.aks.cache.constants.Caches;
 import com.aks.cache.model.CacheResponse;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.EvictionPolicy;
+import com.hazelcast.config.JoinConfig;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.MaxSizeConfig;
+import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
@@ -41,6 +43,13 @@ public class HazelcastConfig {
 		MapConfig caches = new MapConfig();
 		caches.setEvictionPolicy(EvictionPolicy.LFU);
 		config.getMapConfigs().put("caches", caches);
+		
+//		NetworkConfig network = config.getNetworkConfig();
+//		JoinConfig join = network.getJoin();
+//		join.getMulticastConfig().setEnabled( false )
+//		            .addTrustedInterface( "192.168.1.102" );
+//		join.getTcpIpConfig().addMember( "10.45.67.32" ).addMember( "10.45.67.100" )
+//		            .setRequiredMember( "192.168.10.100" ).setEnabled( true );
 
 		return config;
 	}
