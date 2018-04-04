@@ -27,4 +27,9 @@ public class Weather extends Event {
 		return Events.Weather;
 	}
 
+	@Override
+	public String toString() {
+		return "Weather [temperature=" + temperature + "]";
+	}
+
 }
