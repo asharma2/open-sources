@@ -8,7 +8,7 @@
 		<eviction-policy>LFU</eviction-policy>
 		<time-to-live-seconds>20</time-to-live-seconds>
 	</map>
-
+<!-- 
 	<bean id="instance" class="com.hazelcast.core.Hazelcast" factory-method="newHazelcastInstance">
 		<constructor-arg>
 			<bean class="com.hazelcast.config.Config">
@@ -20,34 +20,63 @@
 				</property>
 			</bean>
 		</constructor-arg>
-	</bean>
+	</bean> -->
 
-	<network>
+	<!-- <network>
 		<join>
-            <multicast enabled="true">
-                <multicast-group>224.2.2.3</multicast-group>
-                <multicast-port>54327</multicast-port>
-                <multicast-time-to-live>32</multicast-time-to-live>
-                <multicast-timeout-seconds>2</multicast-timeout-seconds>
-                <trusted-interfaces>
-                   <interface>192.168.1.102</interface>
-                </trusted-interfaces>   
-            </multicast>
-            <tcp-ip enabled="false">
-                <required-member>192.168.1.104</required-member>
-                <member>192.168.1.104</member>
-                <members>192.168.1.105,192.168.1.106</members>
-            </tcp-ip>
-            <aws enabled="false">
-                <access-key>my-access-key</access-key>
-                <secret-key>my-secret-key</secret-key>
-                <region>us-west-1</region>
-                <host-header>ec2.amazonaws.com</host-header>
-                <security-group-name>hazelcast-sg</security-group-name>
-                <tag-key>type</tag-key>
-                <tag-value>hz-members</tag-value>
-            </aws>
-        </join>
-	</network>
+			<multicast enabled="true">
+				<multicast-group>224.2.2.3</multicast-group>
+				<multicast-port>54327</multicast-port>
+				<multicast-time-to-live>32</multicast-time-to-live>
+				<multicast-timeout-seconds>2</multicast-timeout-seconds>
+				<trusted-interfaces>
+					<interface>192.168.1.102</interface>
+				</trusted-interfaces>
+			</multicast>
+			<tcp-ip enabled="false">
+				<required-member>192.168.1.104</required-member>
+				<member>192.168.1.104</member>
+				<members>192.168.1.105,192.168.1.106</members>
+			</tcp-ip>
+			<aws enabled="false">
+				<access-key>my-access-key</access-key>
+				<secret-key>my-secret-key</secret-key>
+				<region>us-west-1</region>
+				<host-header>ec2.amazonaws.com</host-header>
+				<security-group-name>hazelcast-sg</security-group-name>
+				<tag-key>type</tag-key>
+				<tag-value>hz-members</tag-value>
+			</aws>
+		</join>
+	</network> -->
+
+	<management-center enabled="true">
+		http://localhost:8080/mancenter
+	</management-center>
+	
+	<!--  <map name="caches" >
+        
+            Number of sync-backups. If 1 is set as the backup-count for example,
+            then all entries of the map will be copied to another JVM for
+            fail-safety. Valid numbers are 0 (no backup), 1, 2, 3.
+       
+        <backup-count>1</backup-count>
+
+        
+            Number of async-backups. If 1 is set as the backup-count for example,
+            then all entries of the map will be copied to another JVM for
+            fail-safety. Valid numbers are 0 (no backup), 1, 2, 3.
+       
+        <async-backup-count>1</async-backup-count>
+
+        
+            Can we read the local backup entries? Default value is false for
+            strong consistency. Being able to read backup data will give you
+            greater performance.
+       
+        <read-backup-data>false</read-backup-data>
+
+        ...
+    </map> -->
 
 </hazelcast>

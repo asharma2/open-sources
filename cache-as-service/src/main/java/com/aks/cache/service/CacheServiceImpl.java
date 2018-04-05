@@ -2,11 +2,9 @@ package com.aks.cache.service;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.aks.cache.constants.Caches;
@@ -16,10 +14,11 @@ import com.aks.cache.exception.CacheException;
 import com.aks.cache.model.Book;
 import com.aks.cache.model.CacheResponse;
 import com.aks.cache.model.User;
+import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 
 @Service
-public class CacheServiceImpl implements CacheService {
+public class CacheServiceImpl implements CacheService, InitializingBean, DisposableBean {
 
 	@Autowired
 	private BookDao bookDao;
@@ -28,14 +27,12 @@ public class CacheServiceImpl implements CacheService {
 	private UserDao userDao;
 
 	@Autowired
-	@Qualifier("caches")
+	private HazelcastInstance hazelcastInstance;
+
 	private IMap<Caches, CacheResponse<?>> caches;
 
 	@Override
-	@PostConstruct
 	public void start() throws CacheException {
-		caches.put(Caches.Book, new CacheResponse<List<Book>>(Caches.Book, bookDao.findAll()));
-		caches.put(Caches.User, new CacheResponse<List<User>>(Caches.User, userDao.findAll()));
 	}
 
 	@Override
@@ -44,9 +41,19 @@ public class CacheServiceImpl implements CacheService {
 	}
 
 	@Override
-	@PreDestroy
 	public void stop() throws CacheException {
-		caches.clear();
+	}
+
+	@Override
+	public void destroy() throws Exception {
+
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		caches = hazelcastInstance.getMap("caches");
+		caches.put(Caches.Book, new CacheResponse<List<Book>>(Caches.Book, bookDao.findAll()));
+		caches.put(Caches.User, new CacheResponse<List<User>>(Caches.User, userDao.findAll()));
 	}
 
 }
